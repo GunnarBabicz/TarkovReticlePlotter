@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import scope
-
+import calculator
 
 # selects the scope being used from the library of entered scopes
 scopeUsed = scope.Valday
@@ -67,9 +67,9 @@ def plotOnReticle(distance, drop, i, selectedScope):
 
 
 
-def runProgram(tableRanges, distanceRanges, selectedScope):
-    for i in range(len(tableRanges)):
-        plotOnReticle(tableRanges[i], distanceRanges[i], i, selectedScope)
+def runProgram(adjustment_dictionary, selectedScope):
+    for i, (distance, adjustment) in enumerate(adjustment_dictionary.items()):
+        plotOnReticle(distance, adjustment, i, selectedScope)
     cv2.imwrite("result.png", image)
 
 
@@ -78,12 +78,24 @@ def runProgram(tableRanges, distanceRanges, selectedScope):
 #tableRanges = ranges.createRangeObjects()
 # ammunition = ranges.createAmmoObject()
 # increment: The distance between each value that is given by the calculator.
-increment = 100 # in meters
 
-milAdjustments = [0.13, 0.47, 0.31, 0.00, -0.41, -0.90, -1.48, -2.16, -2.98, -3.95]
+
+
+
+# values for testing purposes
+# ballistic_coefficient = 0.252
+# velocity = 904.6
+# sight_height = 68.58
+# zero_distance = 200
 distanceRanges = [50,100,150,200,250,300,350,400,450,500]
 
+adjustment_dictionary = calculator.calculate_mil_adjustments(68.58, 904.6, 0.252, 200, distanceRanges)
+
+
+
+
+
 # running the program
-runProgram(distanceRanges, milAdjustments, scope.Valday)
+runProgram(adjustment_dictionary, scope.Valday)
 
 
