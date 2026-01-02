@@ -63,11 +63,11 @@ def calculate_mil_adjustments(sight_height: float, muzzle_velocity: float, coeff
 # sight height = 68.58
 # zero distance = 200
 
-distances = [50,100,150,200,250,300,350,400,450,500]
+#distances = [50,100,150,200,250,300,350,400,450,500]
 
-test = calculate_mil_adjustments(68.58, 904.6, 0.252, 200, distances)
+#test = calculate_mil_adjustments(68.58, 904.6, 0.252, 200, distances)
 
-print(test)
+#print(test)
 
 
 

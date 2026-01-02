@@ -55,7 +55,6 @@ def plotOnReticle(distance, drop, i, selectedScope):
     if abs(drop) != 0.00:
 
         pixel = 499 - round(drop * selectedScope.pixelsBetweenMils)
-        print(f"pixel for {distance}: {pixel}")
 
         #Step 4: Plot the point on the reticle
         if pixel > 950 or pixel < 50: # If the pixel is beyond the bounds of the optic
