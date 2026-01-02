@@ -6,14 +6,10 @@ import calculator
 # selects the scope being used from the library of entered scopes
 scopeUsed = scope.Valday
 
-
 # sets local parameters according to selected scope
 cmRatio = scopeUsed.cmPer100Meter
 pixelsPerMil = scopeUsed.pixelsBetweenMils
 image = cv2.imread(scopeUsed.imageDirectory)
-
-
-
 
 def annotatePlot(pixel, distance, i):
     """Adds the distance marking to the reticle"""
@@ -51,21 +47,22 @@ def addDescription(distance):
         textHeight = textHeight+20
 
 
+
 def plotOnReticle(distance, drop, i, selectedScope):
-    if abs(drop) != 0.00:
-
+    """Combines functions to locate the coordinates on the reticle
+       photograph, draws the line, and annotates the distance"""
+    if abs(drop) != 0.00: # Check if the distance is on the scope zero
         pixel = 499 - round(drop * selectedScope.pixelsBetweenMils)
-
-        #Step 4: Plot the point on the reticle
-        if pixel > 950 or pixel < 50: # If the pixel is beyond the bounds of the optic
-             return
+        # Check if the drop distance is in bounds
+        if pixel > 950 or pixel < 50: 
+             return # If the pixel is beyond the bounds of the optic, don't attempt to draw
         annotatePlot(pixel, distance, i)
         return
     addDescription(distance) # If no adjustment is needed, this is the zero distance
     
 
 
-
+# Runs the main function of the reticle painter
 def runProgram(adjustment_dictionary, selectedScope):
     for i, (distance, adjustment) in enumerate(adjustment_dictionary.items()):
         plotOnReticle(distance, adjustment, i, selectedScope)
