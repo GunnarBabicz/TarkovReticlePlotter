@@ -43,7 +43,7 @@ def load_ammo_registry(path: str) -> dict[str, Ammo]:
             key = name,
             caliber = properties["Caliber"],
             velocity = properties["InitialSpeed"],
-            bc = properties["BallsiticCoeficient"]
+            bc = properties["BallisticCoeficient"]
             )
 
     return registry
