@@ -3,6 +3,8 @@ from pathlib import Path
 from dataclasses import dataclass
 # importing initial libraries
 
+
+
 @dataclass(frozen=True)
 class Ammo:
     key: str
@@ -32,7 +34,7 @@ def load_ammo_registry(path: str) -> dict[str, Ammo]:
         properties = item.get("_props")
 
         # Making sure that this is a valid item
-        if not name or not props: continue
+        if not name or not properties: continue
 
         # Checking to see if the item is ammunition
         if "ammoType" not in properties: continue
@@ -40,7 +42,7 @@ def load_ammo_registry(path: str) -> dict[str, Ammo]:
         registry[name] = Ammo(
             key = name,
             caliber = properties["Caliber"],
-            velocity = properties["initial speed"],
+            velocity = properties["InitialSpeed"],
             bc = properties["BallsiticCoeficient"]
             )
 
