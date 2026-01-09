@@ -1,4 +1,6 @@
-This is a testing environment for the standalone Reticle Painter for Escape from Tarkov
+TARKOV BALLISTICS RETICLE PLOTTER
+
+This is an application for Escape from Tarkov to give the user a graphical representation of ballistic drop, showing a rapid and convenient way of finding hold points at extended ranges
 
 To activate the Python Environment, open a powershell window in this path. Perform the following steps to instantiate this environment: 
 
