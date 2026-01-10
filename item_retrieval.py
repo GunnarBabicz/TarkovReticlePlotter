@@ -19,7 +19,7 @@ class AmmoItem:
 class WeaponItem:
     key: str
     id: str
-    default_caliber_id: str
+    default_load_id: str
 
 # Creating an initial value to store the ammo list under
 AMMO_REGISTRY = None
@@ -64,7 +64,7 @@ def load_registries(path: str):
             weapon_registry[name] = WeaponItem(
                 key = name,
                 id = item_id,
-                default_caliber_id = properties["defAmmo"]
+                default_load_id = properties["defAmmo"]
             )
 
 
