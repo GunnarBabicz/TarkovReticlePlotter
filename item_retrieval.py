@@ -5,17 +5,26 @@ from dataclasses import dataclass
 
 
 
+# Creating an AmmoItem class for the needed parameters
 @dataclass(frozen=True)
-class Ammo:
+class AmmoItem:
     key: str
+    id: str
     caliber: str
     velocity: float
     bc: float
 
+# Creating a WeaponItem class as the default ammunition type is needed
+@dataclass(frozen=True)
+class WeaponItem:
+    key: str
+    id: str
+    default_caliber_id: str
+
 # Creating an initial value to store the ammo list under
 AMMO_REGISTRY = None
 
-def load_ammo_registry(path: str) -> dict[str, Ammo]:
+def load_registries(path: str):
 
     # checking to see if the json has already been read
     global AMMO_REGISTRY 
@@ -25,10 +34,13 @@ def load_ammo_registry(path: str) -> dict[str, Ammo]:
     with open(path, "r", encoding = "utf-8") as f:
         raw = json.load(f)
 
-    registry = {}
+    # Creating the registry for both weapons and ammunition
+    ammo_registry = {}
+    weapon_registry = {}
 
     for item in raw.values(): # For each item in the json
         properties = item.get("_props")
+        item_id = item.get("_id")
 
         name = item.get("_name")
         properties = item.get("_props")
@@ -37,16 +49,26 @@ def load_ammo_registry(path: str) -> dict[str, Ammo]:
         if not name or not properties: continue
 
         # Checking to see if the item is ammunition
-        if "ammoType" not in properties: continue
+        if "ammoType" in properties:
+            ammo_registry[name] = AmmoItem(
+                key = name,
+                id = item_id,
+                caliber = properties["Caliber"],
+                velocity = properties["InitialSpeed"],
+                bc = properties["BallisticCoeficient"]
+                )
+            continue
 
-        registry[name] = Ammo(
-            key = name,
-            caliber = properties["Caliber"],
-            velocity = properties["InitialSpeed"],
-            bc = properties["BallisticCoeficient"]
+        # Checking to see if the item is a weapon
+        if "defAmmo" in properties:
+            weapon_registry[name] = WeaponItem(
+                key = name,
+                id = item_id,
+                default_caliber_id = properties["defAmmo"]
             )
 
-    return registry
+
+    return ammo_registry, weapon_registry
 
 
 def find_ammo_by_caliber(caliber: str) -> list[str]:

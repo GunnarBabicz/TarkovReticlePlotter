@@ -1,10 +1,11 @@
-import ammo_library
+import item_retrieval
 
 # Creating the ammo library that will be needed for looking up by item name
-ammoLibrary = ammo_library.load_ammo_registry("items.json")
+ammo_library, weapon_library = item_retrieval.load_registries("items.json")
 
 # Looking up the ammo by the string that has been assigned to it
-print(ammoLibrary["patron_556x45_M855"].bc)
+print(ammo_library["patron_556x45_M855"])
+print(weapon_library["weapon_adar_2-15_556x45"])
 
 
 
