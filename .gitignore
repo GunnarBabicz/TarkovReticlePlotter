@@ -2,4 +2,4 @@ ECHO is on.
 
 result.png
 __pycache__/
-
+.flaskenv
